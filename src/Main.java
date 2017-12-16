@@ -9,13 +9,13 @@ public class Main {
 
     public static void main(String[] args) {
         gson = new Gson();
-        Wrap<Foo> wrap = new Wrap<>(new Foo("233"));
+        Wrap<Foo> wrap = new Wrap<>(new Foo<Foo>(new Foo<>("233")));
         String json = gson.toJson(wrap);
-        Type type = new TypeToken<Wrap<Foo>>() {
+        Type type = new TypeToken<Wrap<Foo<Foo>>>() {
         }.getType();
         Object obj1 = gson.fromJson(json, type);
         System.out.println(obj1);
-        Type tType = new TypeToken<Foo>() {
+        Type tType = new TypeToken<Foo<Foo>>() {
         }.getType();
         genericErase(wrap, tType);
     }
@@ -39,10 +39,10 @@ class Wrap<T> {
     }
 }
 
-class Foo {
-    String s;
+class Foo<T> {
+    T t;
 
-    Foo(String s) {
-        this.s = s;
+    Foo(T t) {
+        this.t = t;
     }
 }
